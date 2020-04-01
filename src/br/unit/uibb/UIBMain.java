@@ -1,9 +1,20 @@
+package br.unit.uibb;
+import static br.unit.uibb.entidades.Constantes.ABRIR_CONTA;
+import static br.unit.uibb.entidades.Constantes.CONSULTA_SALDO;
+import static br.unit.uibb.entidades.Constantes.CREDITAR;
+import static br.unit.uibb.entidades.Constantes.DEBITAR;
+import static br.unit.uibb.entidades.Constantes.SAIR;
+import static br.unit.uibb.entidades.Constantes.TOTAL_CONTAS;
+import static br.unit.uibb.entidades.Constantes.TRANSFERIR;
+
 import java.util.Scanner;
 
+import br.unit.uibb.entidades.Cliente;
+import br.unit.uibb.entidades.Conta;
+import br.unit.uibb.util.SenhaUtil;
+
 public class UIBMain {
-	
-	private static final int TOTAL_CONTAS = 2;
-	
+
 	public static void main(String[] args) {
 		Scanner leTeclado = new Scanner(System.in);
 		Conta[] contas = new Conta[TOTAL_CONTAS];
@@ -18,27 +29,27 @@ public class UIBMain {
 			opcao = leTeclado.nextInt();
 
 			switch (opcao) {
-			case 1:
+			case ABRIR_CONTA:
 				Conta conta = montaConta();
 				System.out.println("O numero da sua conta eh: " + conta.getNumero());
 				
 				contas[indice] = conta;
 				indice++;
 				break;
-			case 2:
+			case CONSULTA_SALDO:
 				conta = buscarConta(contas);
 				if(conta != null) {
 					System.out.println("seu saldo eh:" + conta.getSaldo());
 				}
 				
 				break;
-			case 3:
+			case CREDITAR:
 				break;
-			case 4:
+			case DEBITAR:
 				break;
-			case 5:
+			case TRANSFERIR:
 				break;
-			case 6:
+			case SAIR:
 				System.out.println("Obrigado por usa o  Unit Internet Bank"); 
 				System.out.println("--------------------------------------");
 				break;	
@@ -47,7 +58,7 @@ public class UIBMain {
 				break;
 			}
 			
-		}while(opcao != 6);
+		}while(opcao != SAIR);
 	}
 	
 	private static void imprimeMenu() {

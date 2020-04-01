@@ -1,3 +1,4 @@
+package br.unit.uibb.util;
 import java.security.MessageDigest;
 
 public class SenhaUtil {

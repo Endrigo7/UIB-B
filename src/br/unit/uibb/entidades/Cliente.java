@@ -1,3 +1,4 @@
+package br.unit.uibb.entidades;
 public class Cliente {
 	
 	private String nome;
