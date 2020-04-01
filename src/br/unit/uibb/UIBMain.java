@@ -44,8 +44,24 @@ public class UIBMain {
 				
 				break;
 			case CREDITAR:
+				conta = buscarConta(contas);
+				if(conta != null) {
+					System.out.println("Digite o valor");
+					double valor = leTeclado.nextDouble();
+					
+					conta.creditar(valor);
+				}
+				
 				break;
 			case DEBITAR:
+				conta = buscarConta(contas);
+				if(conta != null) {
+					System.out.println("Digite o valor");
+					double valor = leTeclado.nextDouble();
+					
+					conta.debitar(valor);
+				}
+				
 				break;
 			case TRANSFERIR:
 				break;
