@@ -1,0 +1,6 @@
+elefante
+gato
+cachorro
+papagaio
+cavalo
+tartaruga

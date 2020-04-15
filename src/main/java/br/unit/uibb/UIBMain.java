@@ -1,12 +1,12 @@
 package br.unit.uibb;
 
-import static br.unit.uibb.entidades.Constantes.ABRIR_CONTA;
-import static br.unit.uibb.entidades.Constantes.CONSULTA_SALDO;
-import static br.unit.uibb.entidades.Constantes.CREDITAR;
-import static br.unit.uibb.entidades.Constantes.DEBITAR;
-import static br.unit.uibb.entidades.Constantes.SAIR;
-import static br.unit.uibb.entidades.Constantes.TOTAL_CONTAS;
-import static br.unit.uibb.entidades.Constantes.TRANSFERIR;
+import static br.unit.uibb.Constantes.ABRIR_CONTA;
+import static br.unit.uibb.Constantes.CONSULTA_SALDO;
+import static br.unit.uibb.Constantes.CREDITAR;
+import static br.unit.uibb.Constantes.DEBITAR;
+import static br.unit.uibb.Constantes.SAIR;
+import static br.unit.uibb.Constantes.TOTAL_CONTAS;
+import static br.unit.uibb.Constantes.TRANSFERIR;
 
 import java.util.Scanner;
 
@@ -88,6 +88,8 @@ public class UIBMain {
 			}
 
 		} while (opcao != SAIR);
+		
+		leTeclado.close();
 	}
 
 	private static void imprimeMenu() {

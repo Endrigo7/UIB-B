@@ -1,5 +1,8 @@
 package br.unit.uibb.util;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -7,25 +10,28 @@ public class JogoForca {
 
 	private static final int NUMERO_MAXIMO_DE_ERROS = 3;
 	private static final String QUEBRAR_LINHA = "\n";
-	private static final String[] CHAVES = { "azul", "amerelo", "verde", //
-			"preto", "branco", "cinza", "laranja", "vermelho", "rosa" };
-
+	
 	public static void main(String[] args) {
+		JogoForca jogo = new JogoForca();
 		Scanner leTeclado = new Scanner(System.in);
 		
 		int totalErros = 0;
 		int totalChances = NUMERO_MAXIMO_DE_ERROS;
 		int totalLetrasCorretas = 0;
-
-		String chave = gerarChave();
+		
+		jogo.exibeMenu();
+		int op = leTeclado.nextInt();
+		JogoForcaEnum jogoForcaEnum = JogoForcaEnum.procurarPorCodigo(op);
+		
+		String chave = jogo.gerarChave(jogoForcaEnum);
 		String[] palavra = new String[chave.length()];
-
+		
 		for (int i = 0; i < palavra.length; i++) {
 			palavra[i] = "_";
 		}
-
+		
 		do {
-			exibePalavra(palavra);
+			jogo.exibePalavra(palavra);
 
 			System.out.println("Digite uma letra");
 			String letraLida = leTeclado.next();
@@ -47,27 +53,29 @@ public class JogoForca {
 
 			if (!isAchou) {
 				totalErros++;
-				totalChances = naoAchou(totalErros, letraLida); 			
+				totalChances = jogo.naoAchou(totalErros, letraLida);
 			}
 		} while (totalErros < NUMERO_MAXIMO_DE_ERROS);
 
-		encerrarPartida(totalChances, chave);
+		jogo.encerrarPartida(totalChances, chave);
 		leTeclado.close();
 	}
 
-	private static void exibePalavra(String[] palavra) {
+	private void exibePalavra(String[] palavra) {
 		for (int i = 0; i < palavra.length; i++) {
 			System.out.print(palavra[i] + "  ");
 		}
 		System.out.print(QUEBRAR_LINHA);
 	}
 
-	private static String gerarChave() {
-		int indice = getRandomNumberInRange(0, 8);
-		return CHAVES[indice];
+	private String gerarChave(JogoForcaEnum jogoForcaEnum) {
+		List<String> lista = getPossibilidadesChave(jogoForcaEnum.getNomeArquivo());
+
+		int indice = getRandomNumberInRange(0, lista.size() - 1);
+		return lista.get(indice);
 	}
 
-	private static int getRandomNumberInRange(int min, int max) {
+	private int getRandomNumberInRange(int min, int max) {
 		if (min >= max) {
 			throw new IllegalArgumentException("max must be greater than min");
 		}
@@ -75,8 +83,8 @@ public class JogoForca {
 		Random r = new Random();
 		return r.nextInt((max - min) + 1) + min;
 	}
-	
-	private static int naoAchou(int totalErros, String letraLida) {
+
+	private int naoAchou(int totalErros, String letraLida) {
 		int totalChances = (NUMERO_MAXIMO_DE_ERROS - totalErros);
 
 		System.out.println("A letra " + letraLida + " não existe na senha!");
@@ -84,15 +92,41 @@ public class JogoForca {
 		if (totalChances > 0) {
 			System.out.println("Você tem " + totalChances + " chances!");
 		}
-		
+
 		return totalChances;
 	}
-	
-	private static void encerrarPartida(int totalChances, String chave) {
+
+	private void encerrarPartida(int totalChances, String chave) {
 		if (totalChances > 0) {
 			System.out.println("Parabens ,vc venceu!");
 		} else {
 			System.out.println("Vc não acertou a senha. A senha era:" + chave);
 		}
+	}
+
+	private List<String> getPossibilidadesChave(String nomeArquivo) {
+		List<String> cores = new ArrayList<>();
+
+		InputStream stream = getClass()
+				.getClassLoader().getResourceAsStream(nomeArquivo);
+		
+		Scanner leArquivo;
+
+		leArquivo = new Scanner(stream);
+
+		while (leArquivo.hasNextLine()) {
+			String cor = leArquivo.nextLine();
+			cores.add(cor);
+		}
+
+		leArquivo.close();
+		return cores;
+	}
+	
+	private void exibeMenu() {
+		System.out.println("Selecione o tipo da senha");
+		System.out.println("1 - cores em português");
+		System.out.println("2 - cores em ingles");
+		System.out.println("3 - animais");
 	}
 }

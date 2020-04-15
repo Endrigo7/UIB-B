@@ -1,0 +1,13 @@
+blue
+yellow
+green
+black
+white
+green
+orange
+red
+pink
+magenta
+purple
+lemon green
+ciano 
