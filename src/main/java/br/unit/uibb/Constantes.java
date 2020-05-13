@@ -3,7 +3,7 @@ package br.unit.uibb;
 
 public class Constantes {
 	
-	public static final int TOTAL_CONTAS = 2;
+	public static final int TOTAL_CONTAS = 15;
 	public static final int ABRIR_CONTA = 1;
 	public static final int CONSULTA_SALDO = 2;
 	public static final int CREDITAR = 3;
