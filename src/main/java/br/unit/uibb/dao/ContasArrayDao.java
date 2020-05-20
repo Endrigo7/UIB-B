@@ -1,4 +1,4 @@
-package br.unit.uibb.repository;
+package br.unit.uibb.dao;
 
 import static br.unit.uibb.Constantes.TOTAL_CONTAS;
 import static java.util.Arrays.asList;

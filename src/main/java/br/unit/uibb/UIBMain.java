@@ -4,12 +4,15 @@ import static br.unit.uibb.Constantes.ABRIR_CONTA;
 import static br.unit.uibb.Constantes.CONSULTA_SALDO;
 import static br.unit.uibb.Constantes.CREDITAR;
 import static br.unit.uibb.Constantes.DEBITAR;
+import static br.unit.uibb.Constantes.LISTA_TODOS_CLIENTES;
 import static br.unit.uibb.Constantes.SAIR;
-import static br.unit.uibb.Constantes.TOTAL_CONTAS;
 import static br.unit.uibb.Constantes.TRANSFERIR;
 
+import java.util.List;
 import java.util.Scanner;
 
+import br.unit.uibb.controller.ControllerCliente;
+import br.unit.uibb.controller.ControllerConta;
 import br.unit.uibb.entidades.Cliente;
 import br.unit.uibb.entidades.Conta;
 import br.unit.uibb.util.SenhaUtil;
@@ -18,8 +21,10 @@ public class UIBMain {
 
 	public static void main(String[] args) {
 		Scanner leTeclado = new Scanner(System.in);
-		Conta[] contas = new Conta[TOTAL_CONTAS];
-
+		
+		ControllerConta controllerConta = new ControllerConta();
+		ControllerCliente controllerCliente = new ControllerCliente();
+		
 		System.out.println("Bem vindo ao Unit Internet Bank");
 		System.out.println("-------------------------------");
 
@@ -34,49 +39,54 @@ public class UIBMain {
 				Conta conta = montaConta();
 				System.out.println("O numero da sua conta eh: " + conta.getNumero());
 
-				contas[indice] = conta;
-				indice++;
+				controllerConta.save(conta);
 				break;
 			case CONSULTA_SALDO:
-				conta = buscarConta(contas);
-				if (conta != null) {
-					System.out.println("seu saldo eh:" + conta.getSaldo());
-				}
+//				conta = buscarConta(contas);
+//				if (conta != null) {
+//					System.out.println("seu saldo eh:" + conta.getSaldo());
+//				}
 
 				break;
 			case CREDITAR:
-				conta = buscarConta(contas);
-				if (conta != null) {
-					System.out.println("Digite o valor");
-					double valor = leTeclado.nextDouble();
-
-					conta.creditar(valor);
-				}
+//				conta = buscarConta(contas);
+//				if (conta != null) {
+//					System.out.println("Digite o valor");
+//					double valor = leTeclado.nextDouble();
+//
+//					conta.creditar(valor);
+//				}
 
 				break;
 			case DEBITAR:
-				conta = buscarConta(contas);
-				if (conta != null) {
-					System.out.println("Digite o valor");
-					double valor = leTeclado.nextDouble();
-
-					conta.debitar(valor);
-				}
+//				conta = buscarConta(contas);
+//				if (conta != null) {
+//					System.out.println("Digite o valor");
+//					double valor = leTeclado.nextDouble();
+//
+//					conta.debitar(valor);
+//				}
 
 				break;
 			case TRANSFERIR:
-				conta = buscarConta(contas);
-				if (conta != null) {
-					Conta contaDestino = buscarContaDestino(contas);
+//				conta = buscarConta(contas);
+//				if (conta != null) {
+//					Conta contaDestino = buscarContaDestino(contas);
+//
+//					if (contaDestino != null) {
+//						System.out.println("Digite o valor");
+//						double valor = leTeclado.nextDouble();
+//
+//						conta.transferir(contaDestino, valor);
+//					}
+//				}
 
-					if (contaDestino != null) {
-						System.out.println("Digite o valor");
-						double valor = leTeclado.nextDouble();
-
-						conta.transferir(contaDestino, valor);
-					}
+				break;
+			case LISTA_TODOS_CLIENTES:
+				List<Cliente> clientes = controllerCliente.getAll();
+				for (int i = 0; i < clientes.size(); i++) {
+					System.out.println(clientes.get(i));
 				}
-
 				break;
 			case SAIR:
 				System.out.println("Obrigado por usa o  Unit Internet Bank");
@@ -98,7 +108,8 @@ public class UIBMain {
 		System.out.println("[3] - creditar em conta");
 		System.out.println("[4] - debitar em conta");
 		System.out.println("[5] - Transferir");
-		System.out.println("[6] - sair");
+		System.out.println("[6] - Lista Todos os Clientes");
+		System.out.println("[999] - sair");
 	}
 
 	private static Cliente montaCliente() {
@@ -106,11 +117,11 @@ public class UIBMain {
 
 		System.out.println("Digite o cpf do Cliente");
 		String cpf = leTeclado.next();
-
+		
 		System.out.println("Digite o nome do Cliente");
 		String nome = leTeclado.next();
-
-		Cliente cliente = new Cliente(nome, cpf);
+		
+		Cliente cliente = new Cliente(cpf, nome, null);
 		return cliente;
 	}
 
